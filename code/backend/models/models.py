@@ -63,9 +63,8 @@ class Playlists(db.Model):
 
 class AlbumBy(db.Model):
     
-    # flag_id=db.Column(db.Integer,primarykey=True,autoincrement=True)
-    album_id=db.Column(db.String,db.ForeignKey('albums.album_name'),primarykey=True)
-    user_id=db.column(db.Integer,db.ForeignKey('user_info.iser_id'),primarkey=True)
+    album_id=db.Column(db.Integer,db.ForeignKey('albums.album_name'),primary_key=True)
+    user_id=db.Column(db.Integer,db.ForeignKey('user_info.user_id'),primary_key=True)
 
 
 class Albums(db.Model):
