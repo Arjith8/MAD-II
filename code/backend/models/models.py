@@ -61,7 +61,7 @@ class Playlists(db.Model):
     song_id=db.Column(db.Integer,db.ForeignKey("songs.song_id"),primary_key=True)
 
 
-class AlbumBy(db.Model):
+class AlbumFlags(db.Model):
     
     album_id=db.Column(db.Integer,db.ForeignKey('albums.album_name'),primary_key=True)
     user_id=db.Column(db.Integer,db.ForeignKey('user_info.user_id'),primary_key=True)
@@ -71,7 +71,7 @@ class Albums(db.Model):
 
     album_id=db.Column(db.Integer,primary_key=True,autoincrement=True)
     singer_id=db.Column(db.Integer,db.ForeignKey("user_info.user_id"))
-    album_name=db.Column(db.String,primary_key=True)
+    album_name=db.Column(db.String)
     flags=db.Column(db.Integer,default=0)
     song_id=db.Column(db.Integer,db.ForeignKey("songs.song_id"))
     genre=db.Column(db.String)
