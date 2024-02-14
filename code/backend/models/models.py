@@ -10,12 +10,10 @@ class UserInfo(db.Model):
     username=db.Column(db.String(40),nullable=False,unique=True)
     password=db.Column(db.String(256),nullable=False)
     account_type=db.Column(db.String(10),nullable=False,default='normal')
-    recoverable=db.Column(db.Boolean,nullable=False,default=False)
     last_seen=db.Column(db.String,nullable=False)
     sign_up_date=db.Column(db.String,nullable=False)
     blacklisted=db.Column(db.Boolean,default=False)
 
-    questions=db.relationship("Questions",backref='user_info',uselist=False)
     favourites=db.relationship("Favourites",backref="user_info")
     songs=db.relationship("Songs",backref="creator_info")
     albums=db.relationship("Albums",backref="creator_info")
