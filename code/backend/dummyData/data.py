@@ -38,7 +38,7 @@ user_data={
 
 for i in user_data:
     
-    current_date = datetime.now().date().strftime('%Y-%m-%d')
+    current_date = datetime.now().strftime('%Y-%m-%d')
     print(current_date)
     sub_user_data=user_data[i]
     passwd=sub_user_data[3].encode('utf-8')

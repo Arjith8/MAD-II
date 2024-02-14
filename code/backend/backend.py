@@ -1,6 +1,7 @@
 from flask import Flask, request
 from flask_restful import Resource, Api
 from resources.authentication.login import Login
+from resources.authentication.signup import SignUp
 from models.models import db 
 from dotenv import dotenv_values
 from flask_jwt_extended import JWTManager
@@ -21,6 +22,7 @@ JWTManager(app)
 
 
 api.add_resource(Login,'/api/login')
+api.add_resource(SignUp,'/api/signup')
 
 
 debug=env_vars.get("DEBUG")
