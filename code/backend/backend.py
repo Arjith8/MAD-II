@@ -1,5 +1,6 @@
 from flask import Flask, request
 from flask_restful import Resource, Api
+from flask_cors import CORS
 from resources.authentication.login import Login
 from resources.authentication.signup import SignUp
 from models.models import db 
@@ -8,6 +9,8 @@ from flask_jwt_extended import JWTManager
 
 app = Flask(__name__)
 api=Api(app)
+CORS(app)
+
 
 env_vars=dotenv_values(".env")
 
