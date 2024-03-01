@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse, marshal_with, fields
-from models.models import UserInfo
+from resources.models import UserInfo
 from bcrypt import checkpw
 from flask_jwt_extended import create_access_token
 
@@ -8,7 +8,6 @@ output_fields={
     "msg": fields.String,
     "token":fields.String,
     "valid_username":fields.Boolean
-    
 }
 
 class Login(Resource):
@@ -42,8 +41,8 @@ class Login(Resource):
             "valid_username":True
 
         },401
-
-        token=create_access_token(identity=username)
+        
+        token=create_access_token(identity=userCredentials.user_id)
         return {
             "msg":"Login Successful",
             "token":token,

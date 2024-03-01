@@ -46,7 +46,7 @@ async function checkCredentials(){
 
         <div  class="p-4 rounded rounded-5 bg-white text-center custom-width">
 
-            <img class="p-4" src="../assets/normal.png"  style="width: 220px;">
+            <img class="p-4" src="../../assets/normal.png"  style="width: 220px;">
             <!-- <img v-else src="../assets/warning.png"  style="width: 240px;"> -->
 
             <!-- <h1 class="p-2 ">LOGIN</h1> --><br>

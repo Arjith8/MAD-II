@@ -2,8 +2,8 @@ from flask_restful import Resource,reqparse, marshal_with, fields
 from datetime import datetime
 from bcrypt import gensalt, hashpw
 from flask_jwt_extended import create_access_token
-from models.models import UserInfo
-from models.models import db
+from resources.models import UserInfo
+from resources.models import db
 
 
 
