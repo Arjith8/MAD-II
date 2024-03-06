@@ -8,6 +8,18 @@ const password=ref("")
 const msg=ref('')
 
 async function checkCredentials(){
+    
+    console.log(this.$route)
+
+    if (password.value.length<9){
+        setTimeout(()=>{
+            incorrect_creds.value=false
+        },3000)
+        incorrect_creds.value=true
+        msg.value="Password should be of length 9 or more"
+        return
+    }
+    // console.log($route)
 
     const response = await fetch("http://127.0.0.1:5000/api/login",{
         method:"POST",
@@ -27,11 +39,12 @@ async function checkCredentials(){
         incorrect_creds.value=true
         setTimeout(()=>{
             incorrect_creds.value=false
-        },5000)
+        },3000)
 
         return
     }
     incorrect_creds.value=false
+    window.sessionStorage.setItem('MusicalToken',responseData.token)
 
     console.log(responseData.token)
 
@@ -57,7 +70,7 @@ async function checkCredentials(){
             <label for="pass" class="form-label">PASSWORD :</label><br>
             <input type="password" v-model="password" name="pass" class="form-control border-dark-subtle" required /><br />
 
-            <button class="text-center rounded-4 " @click="checkCredentials">LOGIN</button>
+            <button class="text-center rounded-4 " id="login_button" @click="checkCredentials">LOGIN</button>
                         
         </div>
 
