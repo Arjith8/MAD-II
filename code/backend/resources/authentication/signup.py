@@ -5,8 +5,6 @@ from flask_jwt_extended import create_access_token
 from resources.models import UserInfo
 from resources.models import db
 
-
-
 response_fields={
     "msg":fields.String,
     "token":fields.String

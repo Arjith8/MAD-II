@@ -3,7 +3,7 @@ from flask_restful import  Api
 from flask_cors import CORS
 from resources.authentication.login import Login
 from resources.authentication.signup import SignUp
-from resources.coreFunctionalities.musicDataForIndexPage import IndexData
+from resources.coreFunctionalities.musicData import IndexData
 from resources.models import db 
 from dotenv import dotenv_values
 from flask_jwt_extended import JWTManager

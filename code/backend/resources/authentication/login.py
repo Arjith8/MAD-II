@@ -3,12 +3,12 @@ from resources.models import UserInfo
 from bcrypt import checkpw
 from flask_jwt_extended import create_access_token
 
-
 output_fields={
     "msg": fields.String,
     "token":fields.String,
     "valid_username":fields.Boolean
 }
+
 
 class Login(Resource):
 

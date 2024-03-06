@@ -49,7 +49,7 @@ cur=conn.cursor()
 #     conn.commit()
 
 
-# # ##================================= FOR TABLE Songs ===================================
+##================================= FOR TABLE Songs ===================================
 
 newsongs=[
     ['Last To Know', 'Ryan McCaffrey', '15-01-2023', 0, 100000, 3.9],
@@ -105,7 +105,7 @@ singer_dict={
 }
 for i in newsongs:
     ch=random.choice(lis)
-    duration=MP3(f'../../static/Tracks/{i[0]}.mp3').info.length
+    duration=MP3(f'../static/Tracks/{i[0]}.mp3').info.length
     stmt='insert into songs(song_name,singer_id,genre,release_date,flags,playback_count,count,rating_sum,duration) values(?,?,?,?,?,?,?,?,?)'
     cur.execute(stmt,(i[0],singer_dict[i[1]],ch,i[2],i[3],i[4],100,i[5]*100,duration))
     conn.commit()
