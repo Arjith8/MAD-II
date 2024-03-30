@@ -1,27 +1,30 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import AlertMessage from '../alertMessages/AlertMessage.vue';
 
 const incorrect_creds=ref(false)
 const username=ref("")
 const password=ref("")
 const msg=ref('')
+const alert=ref(false)
+const router = useRouter()
 
 async function checkCredentials(){
-    
-    console.log(this.$route)
 
-    if (password.value.length<9){
+    if (!username.value || !password.value){
+        alert.value = true
+        msg.value = "All the fields are mandatory please fill them"
         setTimeout(()=>{
-            incorrect_creds.value=false
+            alert.value=false
         },3000)
-        incorrect_creds.value=true
-        msg.value="Password should be of length 9 or more"
         return
     }
-    // console.log($route)
+    
 
-    const response = await fetch("http://127.0.0.1:5000/api/login",{
+
+    const response = await fetch("http://127.0.0.1:5000/api/v1/login",{
         method:"POST",
         headers:{
             "Content-Type":"application/json"
@@ -36,23 +39,25 @@ async function checkCredentials(){
     if (!responseData.token){
 
         msg.value=responseData.msg
-        incorrect_creds.value=true
+        alert.value=true
         setTimeout(()=>{
-            incorrect_creds.value=false
+            alert.value=false
         },3000)
 
         return
     }
     incorrect_creds.value=false
     window.sessionStorage.setItem('MusicalToken',responseData.token)
+    router.push('/')
 
-    console.log(responseData.token)
+    // Now i have to connect  to state management and push to index page
 
 }
 
 </script>
 
 <template>
+    <AlertMessage :message="msg" v-if="alert"/>
     <div v-if="incorrect_creds" class="text-white bg-danger p-2">{{msg}}</div>
 
     <div class="position-absolute top-50 start-50 translate-middle">

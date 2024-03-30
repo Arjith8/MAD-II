@@ -1,19 +1,15 @@
 <script setup>
-
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 const inputValue = ref('')
 const token = sessionStorage.getItem('MusicalToken')
+const router = useRouter()
 function dataFetch(){
-    const url = new URL('http://127.0.0.1:5000/search');
-    url.searchParams.append('inputValue', inputValue.value);
-    fetch(url,{
-        method:'GET',
-        headers:{
-            'Content-Type':'application/json',
-            'Authorization':token
-        },
-    })
+    if (inputValue.value){
+        router.push(`/search/${inputValue.value}`)
+    }
 }
+
 </script>
 
 <template>
