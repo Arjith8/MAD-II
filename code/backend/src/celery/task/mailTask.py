@@ -15,5 +15,5 @@ def mailTask():
         emails.append(i.email)
     if not emails:
         return
-    requests.post('http://localhost:5000/sendMail',json={"emails":emails})
+    requests.post('http://localhost:5000/',json={"emails":emails, "purpose":"user_remainder"})
     

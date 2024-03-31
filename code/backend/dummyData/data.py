@@ -230,8 +230,8 @@ for i in admin_data:
 
 # for i in playlist_data:
 #     counter +=1
-#     image = f"C:/New folder (2)/MAD-II/code/frontend/public/song/{random_number}.jpg"
-#     to = f"C:/New folder (2)/MAD-II/code/frontend/public/playlist/{counter}.jpg"
+#     image = f"/mnt/c/New folder (2)/MAD-II/code/frontend/public/song/{random_number}.jpg"
+#     to = f"/mnt/c/New folder (2)/MAD-II/code/frontend/public/playlist/{counter}.jpg"
 
 #     stmt="insert into playlists (user_id,playlist_name) values (?,?)"
 #     cur.execute(stmt,(i[1],i[0]))

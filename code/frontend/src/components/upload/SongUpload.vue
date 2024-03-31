@@ -42,11 +42,12 @@ async function uploadSong(){
     formData.append('song', song.value)
     formData.append('thumbnail', thumbnail.value)
     formData.append('genre', genre.value)
-    const response = await fetch('http://127.0.0.1:5000/api/v1/upload_song', {
+    const response = await fetch('http://127.0.0.1:5000/api/v1/song_operation', {
+        method: 'POST',
+
         headers: {
             "Authorization": `${token.value}`
         },
-        method: 'POST',
         body: formData
     })
 

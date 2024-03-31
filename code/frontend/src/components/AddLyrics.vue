@@ -28,7 +28,7 @@ async function sendLyrics(){
         router.push('/creator_menu')
     }
     else{
-        alert('Lyrics could not be created')
+        alert(data.msg)
     }
 }
 </script>

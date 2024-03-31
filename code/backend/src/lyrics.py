@@ -16,7 +16,7 @@ class lyrics(Resource):
         args = request.args
         data = Lyrics.query.filter_by(lyrics_id = args['lyrics_id']).first()
         lyrics = ''
-        with open(f"C:/New folder (2)/MAD-II/code/frontend/public/raw_lyrics/{data.lyrics_id}.txt", "r") as f:
+        with open(f"/mnt/c/New folder (2)/MAD-II/code/frontend/public/raw_lyrics/{data.lyrics_id}.txt", "r") as f:
             lyrics = f.read()
 
         if not data:
@@ -44,23 +44,17 @@ class lyrics(Resource):
                 "success":False
             }
         user_data = get_jwt_identity()
-        if user_data['data']['user_type'] != "creator":
-            return {
-                "msg":"Update to creator account to add lyrics",
-                "success":False
-            }
-        data = Lyrics.query.filter_by(lyrics_name = args['lyrics_name']).first()
+        data = Lyrics.query.filter_by(lyrics_name = args['lyrics_name'], creator_id = user_data['data']['user_id']).first()
         if data:
             return {
                 "msg":"Lyrics already exists",
                 "success":False
             }
         release_date = datetime.now().strftime("%Y-%m-%d")
-        print(user_data['data']['user_id'])
         data = Lyrics(lyrics_name = args['lyrics_name'], release_date = release_date, creator_id = user_data['data']['user_id'])
         db.session.add(data)
         db.session.commit()
-        with open(f"C:/New folder (2)/MAD-II/code/frontend/public/raw_lyrics/{data.lyrics_id}.txt", "w") as f:
+        with open(f"/mnt/c/New folder (2)/MAD-II/code/frontend/public/raw_lyrics/{data.lyrics_id}.txt", "w") as f:
             f.write(args['lyrics'])
         
         return {
@@ -81,7 +75,7 @@ class lyrics(Resource):
             }
         if data.lyrics_name != args['lyrics_name']:
             data.lyrics_name = args['lyrics_name']
-        with open(f"C:/New folder (2)/MAD-II/code/frontend/public/raw_lyrics/{data.lyrics_id}.txt", "w") as f:
+        with open(f"/mnt/c/New folder (2)/MAD-II/code/frontend/public/raw_lyrics/{data.lyrics_id}.txt", "w") as f:
             f.write(args['lyrics'])
         db.session.commit()
         return {

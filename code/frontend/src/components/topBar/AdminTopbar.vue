@@ -17,12 +17,6 @@ defineProps(["logged"])
 
         <div class="nav">
             <li class="nav-item ">
-                <a href="/admin_page/flags" class="nav-link active text-primary   ">FLAGS</a>
-            </li>
-            <li class="nav-item ">
-                <a href="/admin_page/blacklisted" class="nav-link active text-primary  ">BLACKLISTS</a>
-            </li>
-            <li class="nav-item ">
                 <RouterLink to="/logout" class="nav-link active logout">LOGOUT</RouterLink>
             </li>
         </div>

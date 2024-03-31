@@ -24,6 +24,7 @@ import EditAlbum from '@/components/EditAlbum.vue'
 import EditLyrics from '@/components/EditLyrics.vue'
 import AdminDashboard from '@/components/dashboards/AdminDashboard.vue'
 import SearchPage from '@/components/SearchPage.vue'
+import Flags from '@/components/Flags.vue'
 
 
 const routes=[
@@ -52,7 +53,7 @@ const routes=[
 		component : Logout
 	},
 	{
-		path:'/seemore/:path',
+		path:'/seemore/:content',
 		component: SeeAll
 	},
 	{
@@ -126,6 +127,10 @@ const routes=[
 	{
 		path:'/search/:keyword',
 		component:SearchPage
+	},
+	{
+		path:'/flags',
+		component:Flags
 	}
 
 ]

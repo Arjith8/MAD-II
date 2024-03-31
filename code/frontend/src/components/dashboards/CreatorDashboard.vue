@@ -43,7 +43,6 @@ async function deleteLyrics(lyrics_id){
         method: 'DELETE',
         headers: {
             "Authorization": `${token.value}`,
-            // "Content-Type": "application/json"
         },
 
     })
@@ -169,7 +168,7 @@ onBeforeMount(async ()=>{
                     <th>Delete</th>
                     <th>Change</th>
                 </tr>
-                <tr v-for="(song,index) in songs" :key="index">
+                <tr v-for="(song,index) in songs" :key="index" class="text-center">
                     <td class="p-2">{{index+1}}</td>
                     <td><router-link :to="`/song/${song.song_id}`" class="text-white ">{{song.song_name}}</router-link></td>
                     <td>{{rank[index]}}</td>
@@ -182,7 +181,7 @@ onBeforeMount(async ()=>{
                 </tr>
             </table>
         </div><br>
-        <div class="row mt-3 mx-4" style="">
+        <div class="row mt-3 mx-4" >
             <h2 class="py-2">ALBUM ANALYTICS <router-link to="/create_album"><button class="btn btn-outline-warning"> CREATE ALBUM </button></router-link></h2>
             <table class="table table-dark table-striped  table-bordered  m-auto ">
                 <tr class="text-center ">
@@ -194,7 +193,7 @@ onBeforeMount(async ()=>{
                     <th>Change</th>
                 </tr>
 
-                <tr v-for="(album, index) in albums" :key="index">
+                <tr v-for="(album, index) in albums" :key="index" class="text-center">
                     <td class="p-2">{{index+1}}</td>
                     <td><router-link :to="`/album/${album.album_id}`" class="text-white">{{ album.album_name }}</router-link></td>
                     <td>{{album.songs_count}}</td>
@@ -217,7 +216,7 @@ onBeforeMount(async ()=>{
                     <th>Change</th>
                 </tr>
                
-                <tr v-for="(i, index) in lyrics" :key="index">
+                <tr v-for="(i, index) in lyrics" :key="index" class="text-center">
                     <td class="p-2">{{index+1}}</td>
                     <td><router-link :to="`/lyrics/${i.lyrics_id}`" class="text-white">{{i.lyrics_name}}</router-link></td>
                     <td>{{i.release_date}}</td>

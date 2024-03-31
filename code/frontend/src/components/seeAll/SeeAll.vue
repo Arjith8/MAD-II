@@ -4,10 +4,10 @@ import { useRoute } from 'vue-router';
 import { onBeforeMount, ref } from 'vue';
 const token = ref(sessionStorage.getItem('MusicalToken'))
 const route = useRoute()
-const path = route.params.path
+const content = route.params.content
 const data = ref({})
 const title = ref('')
-console.log(path)
+console.log(content)
 
 onBeforeMount(async() => {
     function splitIntoBatches(data) {
@@ -18,18 +18,18 @@ onBeforeMount(async() => {
         }
         return batches;
     }
-    if (path == 'creator' ){
+    if (content == 'creator' ){
         title.value = 'All Creators'
         const response = await fetch('http://localhost:5000/api/v1/creators?creator_count=100')
         data.value = await response.json()
         console.log(data.value)
     }
-    else if (path == 'album' ){
+    else if (content == 'album' ){
         title.value = 'All Albums'
         const response = await fetch('http://localhost:5000/api/v1/albums?album_count=100')
         data.value = await response.json()
     }
-    else if (path == 'song' ){
+    else if (content == 'song' ){
         title.value = 'All Songs'
         const response = await fetch('http://localhost:5000/api/v1/songs?song_count=100')
         data.value = await response.json()
@@ -47,11 +47,9 @@ onBeforeMount(async() => {
     <h1 class="text-white">{{ title }}</h1>
     <div class="row text-white">
         <div v-for="(batch,index) in data" :key="index" class="row ms-4 me-4">
-            <!-- {{ batch }} -->
             <div v-for="(value,i) in batch" :key="i" class="p-2 col-2 bg-custom mx-2 my-1">
-                <!-- {{ value }} -->
-                <router-link :to="`${path}/${value.id}`">
-                    <img :src="`/${path}/${value.id}.jpg`" style="width: 13rem;" :alt="`${value.name}`">
+                <router-link :to="`/${content}/${value.id}`">
+                    <img :src="`/${content}/${value.id}.jpg`" style="width: 13rem;" :alt="`${value.name}`">
                     <p class="text-white text-center m-1 mb-0">{{value.name}}</p>
                 </router-link>
             </div>

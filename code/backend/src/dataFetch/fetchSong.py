@@ -1,6 +1,7 @@
 from flask_restful import Resource,reqparse, fields, marshal
 from flask import request
-from database.models import Songs
+from database.models import Songs, db
+from cache_config import cache
 
 
 response_type={
@@ -25,6 +26,7 @@ class SongData(Resource):
         self.parser.add_argument('song_id',type=int, location='args')
         self.parser.add_argument('song_count',type=int,location='args')
     
+    # @cache.cached(timeout=60, key_prefix=lambda: request.url)
     def get(self):
 
         args = self.parser.parse_args()
@@ -35,7 +37,6 @@ class SongData(Resource):
             else:
                 data=Songs.query.order_by(Songs.playback_count.desc()).limit(args['song_count'])
             for i in data:
-                print('hi')
                 if i.count!=0:
                     rating = format((i.rating_sum/i.count),'.2f')
                 else:
@@ -73,9 +74,8 @@ class SongData(Resource):
         else:
             rating = None
 
-        with(open(f"C:/New folder (2)/MAD-II/code/frontend/public/lyrics/{song.song_id}.txt",'r')) as f:
+        with(open(f"/mnt/c/New folder (2)/MAD-II/code/frontend/public/lyrics/{song.song_id}.txt",'r')) as f:
             lyrics = f.read()
-        print(lyrics)
         data = {
             "id":song.song_id,
             "name":song.song_name,
@@ -90,6 +90,7 @@ class SongData(Resource):
         }
         response = marshal(data,response_type)
         song.playback_count+=1
+        db.session.commit()
         return response
     
     

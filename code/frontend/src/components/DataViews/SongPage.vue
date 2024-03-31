@@ -12,12 +12,7 @@ const route = useRoute()
 const song_data = ref({})
 const song_id = ref()
 
-// onMounted(() => {
-//     document.body.style.backgroundImage = `url('/song/${song_id.value}.jpg')`;
-//     document.body.style.backgroundSize = 'cover';
-//     document.body.style.backgroundPosition = 'center';
-//     document.body.style.backgroundRepeat = 'no-repeat';
-// });
+
 
 onBeforeMount(async()=>{
     song_id.value = route.params.id
@@ -29,7 +24,6 @@ onBeforeMount(async()=>{
             }
         })
         song_data.value = await response.json()
-        console.log(song_data.value)
     }catch(e){
         console.log(e)
     }
@@ -57,6 +51,7 @@ async function addToFav(){
         return
     }
     alert("Added to Favourite")
+    router.go()
 
 }
 
@@ -88,7 +83,7 @@ async function flagged(){
 </script>
 
 <template>
-    <UserTopbar :logged="logged"/>
+    <UserTopbar :logged="token"/>
     <div class="row justify-content-center " style="height: 92.2vh; opacity: 95%;">
         <div class="col-auto px-4 rounded-2" style="background-color: #525452;">
             <div class="text-center " >

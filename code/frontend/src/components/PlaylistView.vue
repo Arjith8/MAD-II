@@ -37,7 +37,7 @@ onBeforeMount(async()=>{
         </div>
 
         <div class="row ">  
-            <p v-show="!data" class="fs-2 p-2 text-white-50">You haven't created any {{purpose}}</p>
+            <p v-show="!data.length" class="fs-2 p-2 text-white-50">You haven't created any playlists</p>
             <div v-for="(batch,index) in data" :key="index" class="row ms-4 me-4">
                 <div v-for="(playlist,i) in batch" :key="i" class="p-2 col-2 bg-custom mx-2 my-1" style="width:auto">
                     <router-link :to="`/playlist/${playlist.id}`">

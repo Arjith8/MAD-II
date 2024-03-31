@@ -1,5 +1,6 @@
 from flask_restful import Resource, fields, marshal, reqparse
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask import request
 from database.models import UserInfo, db
 
 response_type = {
@@ -35,9 +36,14 @@ class userData(Resource):
     
     @jwt_required()
     def post(self):
+        body = {}
+        body["username"] = request.form.get('username')
+        body["first_name"] = request.form.get("first_name")
+        body["last_name"] = request.form.get('last_name')
+        body["email"] = request.form.get('email')
+        dp = request.files.get('dp')
+        print(dp)
         data = get_jwt_identity()
-        body = self.parser.parse_args()
-        print(body)
         user_id = data['data']["user_id"]
         user = UserInfo.query.filter_by(user_id=user_id).first()
         if body['username']!=user.username:
@@ -47,11 +53,13 @@ class userData(Resource):
                     "success":False
                 },409
             user.username = body['username']
-        print(body)
         user.first_name = body['first_name']
         user.last_name = body['last_name']
         user.email = body['email']
         db.session.commit()
+        if dp:
+            dp.save(f'/mnt/c/New folder (2)/MAD-II/code/frontend/public/creator/{user_id}.jpg')
+
         return {
             "success":True
         }

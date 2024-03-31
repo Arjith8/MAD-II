@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> Hi, {{ username }}</h1>
+    <p>This is your monthly creator report</p>
+    <p>Your best song is {{songs[0].song__name}}</p>
+    <p>Here are some of the stats for your songs</p>
+    <table>
+        <tr>
+            <th>Song Name</th>
+            <th>Plaayback Count</th>
+            <th>Rating</th>
+        </tr>
+        {% for song in songs %}
+            <tr>
+                <td>{{song.song_name}}</td>
+                <td>{{song.playback_count}}</td>
+                <td>{{song[4]}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

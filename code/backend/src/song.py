@@ -13,7 +13,8 @@ class Song(Resource):
         self.parser.add_argument('song_name', type=str)
         self.parser.add_argument('genre', type=str)
         self.parser.add_argument('lyrics', type=str)
-        pass
+
+
     @jwt_required()
     def post(self):
         user_data = get_jwt_identity()
@@ -22,6 +23,7 @@ class Song(Resource):
         lyrics = request.files.get('lyrics')
         song_mp3 = request.files.get('song')
         thumbnail = request.files.get('thumbnail')
+        print("hi")
         
         if Songs.query.filter_by(song_name=song_name).first():
             return {"message": "Song already exists", "success":False}, 400
@@ -32,15 +34,18 @@ class Song(Resource):
         if not song_name or not genre or not lyrics or not song_mp3 or not thumbnail:
             return {"message": "All fields are required", "success":False}, 400
         
+        print("hi")
+        
         release_date = datetime.now().strftime("%Y-%m-%d")
         song_duration = MP3(song_mp3).info.length
 
         song = Songs(singer_id=user_data['data']['user_id'], song_name=song_name, genre=genre, release_date=release_date, duration = song_duration)
         db.session.add(song)
+        print("hi")
         db.session.commit()
-        lyrics.save(f"C:/New folder (2)/MAD-II/code/frontend/public/lyrics/{song.song_id}.txt")
-        song_mp3.save(f"C:/New folder (2)/MAD-II/code/frontend/public/tracks/{song.song_id}.mp3")
-        thumbnail.save(f"C:/New folder (2)/MAD-II/code/frontend/public/song/{song.song_id}.jpg")
+        lyrics.save(f"/mnt/c/New folder (2)/MAD-II/code/frontend/public/lyrics/{song.song_id}.txt")
+        song_mp3.save(f"/mnt/c/New folder (2)/MAD-II/code/frontend/public/tracks/{song.song_id}.mp3")
+        thumbnail.save(f"/mnt/c/New folder (2)/MAD-II/code/frontend/public/song/{song.song_id}.jpg")
 
         return {
             "message": "Song uploaded successfully",
@@ -59,7 +64,7 @@ class Song(Resource):
         
         song.song_name = args['song_name']
         song.genre = args['genre']
-        with(open(f"C:/New folder (2)/MAD-II/code/frontend/public/lyrics/{song.song_id}.txt",'w')) as f:
+        with(open(f"/mnt/c/New folder (2)/MAD-II/code/frontend/public/lyrics/{song.song_id}.txt",'w')) as f:
             f.write(args['lyrics'])
         db.session.commit()
         return {
@@ -75,7 +80,6 @@ class Song(Resource):
         user_data = get_jwt_identity()
         if user_data['data']['user_type'] == 'Admin':
             song = Songs.query.filter_by(song_id=song_id).first()
-            print(song)
             if song:
                 db.session.delete(song)
                 db.session.commit()

@@ -1,5 +1,6 @@
 from flask_restful import Resource, reqparse, marshal, fields
-from database.models import Albums, db, AlbumSongs, Songs, UserInfo, AlbumFlags
+from database.models import Albums, db, AlbumSongs, Songs
+from cache_config import cache
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import request
 
@@ -25,6 +26,7 @@ class fetchAlbum(Resource):
         self.parser.add_argument('album_id',type=int, location='args')
         self.parser.add_argument('album_count',type=int,location='args')
 
+    @cache.cached(timeout=60, key_prefix=lambda: request.url)
     def get(self):
         args = self.parser.parse_args()
         if '/albums' in request.url:
@@ -119,7 +121,7 @@ class fetchAlbum(Resource):
                 "message": "No songs found, aborting album creation",
                 "success":False
             }, 400
-        thumbnail.save(f"C:/New folder (2)/MAD-II/code/frontend/public/album/{album.album_id}.jpg")
+        thumbnail.save(f"/mnt/c/New folder (2)/MAD-II/code/frontend/public/album/{album.album_id}.jpg")
         return {
             "message": "Album created successfully",
             "success":True
@@ -160,7 +162,7 @@ class fetchAlbum(Resource):
                 db.session.add(album_song)
                 db.session.commit()
         if thumbnail:
-            thumbnail.save(f"C:/New folder (2)/MAD-II/code/frontend/public/album/{album.album_id}.jpg")
+            thumbnail.save(f"/mnt/c/New folder (2)/MAD-II/code/frontend/public/album/{album.album_id}.jpg")
         return {
             'message': 'Album updated successfully',
             'success':True
@@ -171,18 +173,14 @@ class fetchAlbum(Resource):
     def delete(self):
         user_data = get_jwt_identity()
         user_id = user_data['data']['user_id']
+        print(user_data)
         album_id = self.parser.parse_args()['album_id']
-
         if not album_id:
             return {"message": "Invalid request"}, 400
-        if user_data['data']['user_type'] != 'Admin':
+        if user_data['data']['user_type'] == 'Admin':
             album = Albums.query.filter_by(album_id=album_id).first()
-            if not album:
-                return {"message": "Invalid album id"}, 400
-            album_flags = AlbumFlags.query.filter_by(album_id=album_id).first()
-            if album_flags:
-                db.session.delete(album_flags)
-                db.session.commit()
+            print("hi")
+
             album_songs = AlbumSongs.query.filter_by(album_id=album_id).all()
             for i in album_songs:
                 db.session.delete(i)
@@ -194,14 +192,10 @@ class fetchAlbum(Resource):
         if not album:
             return {"message": "Invalid album id"}, 400
         album_songs = AlbumSongs.query.filter_by(album_id=album_id).all()
-        album_flags = AlbumFlags.query.filter_by(album_id=album_id).first()
         for i in album_songs:
             db.session.delete(i)
             db.session.commit()
-        if album_flags:
-            db.session.delete(album_flags)
-            db.session.commit()
-        print('hi')
+
         db.session.delete(album)
         db.session.commit()
         return {"message": "Album deleted successfully","success":True}, 200

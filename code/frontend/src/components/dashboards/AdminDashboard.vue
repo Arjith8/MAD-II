@@ -32,7 +32,6 @@ async function deleteAlbum(album_id){
 }
 
 async function deleteSong(song_id){
-    console.log(song_id)
     const response = await fetch("http://127.0.0.1:5000/api/v1/song_operation", {
         method: 'DELETE',
         headers: {

@@ -3,6 +3,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import request
 from database.models import Playlists, PlaylistSongs, Songs, db
 from flask import request
+from cache_config import cache
 
 
 class Playlist(Resource):
@@ -25,7 +26,6 @@ class Playlist(Resource):
             response = []
             for playlist in data:
                 songs = playlist.playlist_songs_id
-                print(songs[0].song_data)
 
                 response.append({
                     "id": playlist.playlist_id,
@@ -93,7 +93,7 @@ class Playlist(Resource):
                 playlist_song = PlaylistSongs(playlist_id=playlist.playlist_id, song_id=song_id)
                 db.session.add(playlist_song)
                 db.session.commit()
-        thumbnail.save(f"C:/New folder (2)/MAD-II/code/frontend/public/playlist/{playlist.playlist_id}.jpg")
+        thumbnail.save(f"/mnt/c/New folder (2)/MAD-II/code/frontend/public/playlist/{playlist.playlist_id}.jpg")
         
 
         

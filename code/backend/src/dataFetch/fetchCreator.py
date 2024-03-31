@@ -1,7 +1,8 @@
+from cache_config import cache
+
 from flask_restful import reqparse, Resource, marshal, fields
 from flask import request
-from database.models import UserInfo, Songs
-from database.models import db
+from database.models import UserInfo, Songs, db
 
 song_type={
     "song_id":fields.Integer,
@@ -25,6 +26,7 @@ class fetchCreator(Resource):
         self.parser.add_argument('creator_id',type=int, location='args')
         self.parser.add_argument('creator_count',type=int,location='args')
 
+    @cache.cached(timeout=60, key_prefix=lambda: request.url)
     def get(self):
         args = self.parser.parse_args()
         if '/creators' in request.url:

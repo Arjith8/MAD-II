@@ -26,10 +26,12 @@ class Login(Resource):
     def post(self):
 
         args=self.parser.parse_args()
-        username=args["username"].encode('utf-8')
+        username=args["username"]
         password=args["password"].encode('utf-8')
+        print(args)
         if args['user_type'] == "Admin":
             user_type = "Admin"
+            username = username.encode('utf-8')
             userCredentials = AdminInfo.query.first()
             if checkpw(username,userCredentials.admin_username):
                 if not(checkpw(password,userCredentials.password)):

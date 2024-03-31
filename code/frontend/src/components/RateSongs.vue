@@ -23,6 +23,7 @@ async function submitRating(){
     const data = await response.json()
     if (data.success){
         alert("Rating Submitted")
+        router.go()
     }else if (response.status == 401){
         alert("Please Login to Rate songs, redirecting in 5 seconds")
         setTimeout(() => {
